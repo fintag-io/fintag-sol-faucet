@@ -1,7 +1,8 @@
 import { Box, Button, Image, Input, Text} from "@chakra-ui/react"
 import { useState } from "react";
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
-import { toaster } from "./components/ui/toaster";
+import { Toaster, toaster } from "./components/ui/toaster";
+import { Spinner } from "@chakra-ui/react";
 
 const connection = new Connection('https://api.devnet.solana.com', 'confirmed');
 
@@ -36,10 +37,10 @@ const App = () => {
       }); 
     } catch (error) {
       console.error("Airdrop failed:", error);
-      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+      // const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
       toaster.error({
         title: "Airdrop Failed",
-        description: `Could not send SOL. Reason: ${errorMessage}`,
+        description: `Could not send SOL`,
         duration: 5000,
       });
     } finally {
@@ -49,6 +50,7 @@ const App = () => {
 
   return (
     <Box display='flex' overflowX='hidden' w='100%' flexDirection='column' alignItems='center' justifyContent='center' minHeight='100vh'>
+      <Toaster />
       <Box m='20px'>
         <Image src="./src/assets/logo.png" alt="Fintag Logo" style={{ width: '60px', height: '60px' }} />
       </Box>
@@ -67,7 +69,10 @@ const App = () => {
         <Button borderRadius='0' ml={{base: '0', md:'5px'}} mt={{base: '5px', md:'0'}}
         onClick={requestAirdrop}
         disabled={isLoading}
-        >Request {AIRDROP_AMOUNT} SOL</Button>
+        >
+        Request {AIRDROP_AMOUNT} SOL
+        {isLoading && <Spinner size='sm' ml='5px' />}
+        </Button>
       </Box>
     </Box>
   )
