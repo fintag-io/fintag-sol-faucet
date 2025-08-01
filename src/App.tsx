@@ -1,4 +1,4 @@
-import { Box, Button, Input, Text} from "@chakra-ui/react"
+import { Box, Button, Image, Input, Text} from "@chakra-ui/react"
 import { useState } from "react";
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
 import { toaster } from "./components/ui/toaster";
@@ -48,20 +48,23 @@ const App = () => {
   };
 
   return (
-    <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' height='100vh'>
-      <Box>
-        <Text as="p" fontWeight='bold' fontSize='24px'>SOL Devnet Faucet</Text>
+    <Box display='flex' overflowX='hidden' w='100%' flexDirection='column' alignItems='center' justifyContent='center' minHeight='100vh'>
+      <Box m='20px'>
+        <Image src="./src/assets/logo.png" alt="Fintag Logo" style={{ width: '60px', height: '60px' }} />
       </Box>
-      <Box display='flex' alignItems='center' justifyContent='center' mt={4}>
+      <Box mb='20px'>
+        <Text as="p" fontWeight='bold' textAlign='center' fontSize='24px'>SOL Devnet Faucet</Text>
+      </Box>
+      <Box display='flex' w='100%' px='20px' flexDirection={{ base: 'column', md: 'row' }} alignItems='center' justifyContent='center' mt={4}>
         <Input
           placeholder="Enter your wallet address"
           borderRadius='0'
-          width='400px'
+          width={{base: '100%', md:'400px' }}
           value={walletAddress}
           onChange={(e) => setWalletAddress(e.target.value)}
           disabled={isLoading}
         />
-        <Button borderRadius='0' ml='5px'
+        <Button borderRadius='0' ml={{base: '0', md:'5px'}} mt={{base: '5px', md:'0'}}
         onClick={requestAirdrop}
         disabled={isLoading}
         >Request {AIRDROP_AMOUNT} SOL</Button>
