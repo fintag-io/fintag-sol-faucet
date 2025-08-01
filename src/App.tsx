@@ -1,21 +1,70 @@
-import { Box, Button, Input } from "@chakra-ui/react"
+import { Box, Button, Input, Text} from "@chakra-ui/react"
+import { useState } from "react";
+import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
+import { toaster } from "./components/ui/toaster";
+
+const connection = new Connection('https://api.devnet.solana.com', 'confirmed');
 
 const App = () => {
+  const AIRDROP_AMOUNT = 5;
+
+  const [walletAddress, setWalletAddress] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const requestAirdrop = async () => {
+    if (!walletAddress) {
+      console.error("Wallet address is required");
+      toaster.warning({
+        title: "Wallet Address Required",
+        description: "Please enter a wallet address to request an airdrop.",
+        duration: 3000,
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const publicKey = new PublicKey(walletAddress);
+      const airdropSignature = await connection.requestAirdrop(publicKey, AIRDROP_AMOUNT * LAMPORTS_PER_SOL);
+      await connection.confirmTransaction(airdropSignature, 'confirmed');
+      console.log(`Airdrop successful for ${walletAddress}`);
+      setWalletAddress("");
+      toaster.success({
+        title: "Airdrop Successful",
+        description: `${AIRDROP_AMOUNT} SOL has been sent to ${walletAddress}`,
+        duration: 3000,
+      }); 
+    } catch (error) {
+      console.error("Airdrop failed:", error);
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+      toaster.error({
+        title: "Airdrop Failed",
+        description: `Could not send SOL. Reason: ${errorMessage}`,
+        duration: 5000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <Box>
+    <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' height='100vh'>
       <Box>
-        <p>Devnet Faucet</p>
+        <Text as="p" fontWeight='bold' fontSize='24px'>SOL Devnet Faucet</Text>
       </Box>
-      <Box>
+      <Box display='flex' alignItems='center' justifyContent='center' mt={4}>
         <Input
           placeholder="Enter your wallet address"
+          borderRadius='0'
+          width='400px'
+          value={walletAddress}
+          onChange={(e) => setWalletAddress(e.target.value)}
+          disabled={isLoading}
         />
-        <Input
-          placeholder="Enter the amount to request"
-          type="number"
-          min="0"
-        />
-        <Button>Request</Button>
+        <Button borderRadius='0' ml='5px'
+        onClick={requestAirdrop}
+        disabled={isLoading}
+        >Request {AIRDROP_AMOUNT} SOL</Button>
       </Box>
     </Box>
   )
