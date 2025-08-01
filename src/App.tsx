@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
 import { Toaster, toaster } from "./components/ui/toaster";
 import { Spinner } from "@chakra-ui/react";
+import logo from './assets/logo.png';
 
 const connection = new Connection('https://api.devnet.solana.com', 'confirmed');
 
@@ -52,7 +53,7 @@ const App = () => {
     <Box display='flex' overflowX='hidden' w='100%' flexDirection='column' alignItems='center' justifyContent='center' minHeight='100vh'>
       <Toaster />
       <Box m='20px'>
-        <Image src="./src/assets/logo.png" alt="Fintag Logo" style={{ width: '60px', height: '60px' }} />
+        <Image src={logo} alt="Fintag Logo" style={{ width: '60px', height: '60px' }} />
       </Box>
       <Box mb='20px'>
         <Text as="p" fontWeight='bold' textAlign='center' fontSize='24px'>SOL Devnet Faucet</Text>
