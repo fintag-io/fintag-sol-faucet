@@ -8,7 +8,7 @@ import logo from './assets/logo.png';
 const connection = new Connection('https://api.devnet.solana.com', 'confirmed');
 
 const App = () => {
-  const AIRDROP_AMOUNT = 5;
+  const AIRDROP_AMOUNT = 0.1;
 
   const [walletAddress, setWalletAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
