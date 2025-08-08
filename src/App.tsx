@@ -34,7 +34,7 @@ const App = () => {
       toaster.success({
         title: "Airdrop Successful",
         description: `${AIRDROP_AMOUNT} SOL has been sent to ${walletAddress}`,
-        duration: 3000,
+        duration: 3200,
       }); 
     } catch (error) {
       console.error("Airdrop failed:", error);
