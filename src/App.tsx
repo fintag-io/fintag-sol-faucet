@@ -5,13 +5,12 @@ import { Toaster, toaster } from "./components/ui/toaster";
 import { Spinner } from "@chakra-ui/react";
 import logo from './assets/logo.png';
 import { FintagClient } from '@fintag/js'
-import "dotenv/config";
 
 const connection = new Connection(clusterApiUrl("devnet"), 'confirmed');
 
 const App = () => {
   const AIRDROP_AMOUNT = 0.1;
-  const fintag = new FintagClient(process.env.FINTAG_API_KEY || "")
+  const fintag = new FintagClient(import.meta.env.VITE_FINTAG_API_KEY || "")
 
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
