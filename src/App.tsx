@@ -1,24 +1,27 @@
 import { Box, Button, Image, Input, Text} from "@chakra-ui/react"
 import { useState } from "react";
-import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
+import { Connection, LAMPORTS_PER_SOL, PublicKey, clusterApiUrl } from '@solana/web3.js';
 import { Toaster, toaster } from "./components/ui/toaster";
 import { Spinner } from "@chakra-ui/react";
 import logo from './assets/logo.png';
+import { FintagClient } from '@fintag/js'
+import "dotenv/config";
 
-const connection = new Connection('https://api.devnet.solana.com', 'confirmed');
+const connection = new Connection(clusterApiUrl("devnet"), 'confirmed');
 
 const App = () => {
   const AIRDROP_AMOUNT = 0.1;
+  const fintag = new FintagClient(process.env.FINTAG_API || "")
 
-  const [walletAddress, setWalletAddress] = useState("");
+  const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const requestAirdrop = async () => {
-    if (!walletAddress) {
-      console.error("Wallet address is required");
+    if (!value) {
+      console.error("FinTag/Wallet address is required");
       toaster.warning({
-        title: "Wallet Address Required",
-        description: "Please enter a wallet address to request an airdrop.",
+        title: "FinTag Required",
+        description: "Please enter a FinTag or wallet address to request an airdrop.",
         duration: 3000,
       });
       return;
@@ -26,14 +29,22 @@ const App = () => {
 
     try {
       setIsLoading(true);
-      const publicKey = new PublicKey(walletAddress);
+      // Check if input is a FinTag (starts with a hashtag)
+      let publicKey;
+      if (value.startsWith("#")) {
+        const getPubKey = await fintag.getWalletInfo(value);
+        publicKey = getPubKey?.wallet;
+      } else {
+        publicKey = new PublicKey(value);
+      }
+
       const airdropSignature = await connection.requestAirdrop(publicKey, AIRDROP_AMOUNT * LAMPORTS_PER_SOL);
       await connection.confirmTransaction(airdropSignature, 'confirmed');
-      console.log(`Airdrop successful for ${walletAddress}`);
-      setWalletAddress("");
+      console.log(`Airdrop successful for ${value}`);
+      setValue("");
       toaster.success({
         title: "Airdrop Successful",
-        description: `${AIRDROP_AMOUNT} SOL has been sent to ${walletAddress}`,
+        description: `${AIRDROP_AMOUNT} SOL has been sent to ${value}`,
         duration: 3200,
       }); 
     } catch (error) {
@@ -63,8 +74,8 @@ const App = () => {
           placeholder="Enter your wallet address"
           borderRadius='0'
           width={{base: '100%', md:'400px' }}
-          value={walletAddress}
-          onChange={(e) => setWalletAddress(e.target.value)}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
           disabled={isLoading}
         />
         <Button borderRadius='0' ml={{base: '0', md:'5px'}} mt={{base: '5px', md:'0'}}
