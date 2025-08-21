@@ -4,8 +4,7 @@ import { Connection, LAMPORTS_PER_SOL, PublicKey, clusterApiUrl } from '@solana/
 import { Toaster, toaster } from "./components/ui/toaster";
 import { Spinner } from "@chakra-ui/react";
 import logo from './assets/logo.png';
-// import { FintagClient } from '@fintag/js'
-const { FintagClient } = await import("@fintag/js");
+import { FintagClient } from "@fintag/js";
 
 const connection = new Connection(clusterApiUrl("devnet"), 'confirmed');
 
@@ -71,7 +70,7 @@ const App = () => {
       </Box>
       <Box display='flex' w='100%' px='20px' flexDirection={{ base: 'column', md: 'row' }} alignItems='center' justifyContent='center' mt={4}>
         <Input
-          placeholder="Enter your wallet address"
+          placeholder="Enter your FinTag or wallet address"
           borderRadius='0'
           width={{base: '100%', md:'400px' }}
           value={value}
