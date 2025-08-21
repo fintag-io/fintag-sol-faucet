@@ -4,7 +4,8 @@ import { Connection, LAMPORTS_PER_SOL, PublicKey, clusterApiUrl } from '@solana/
 import { Toaster, toaster } from "./components/ui/toaster";
 import { Spinner } from "@chakra-ui/react";
 import logo from './assets/logo.png';
-import { FintagClient } from '@fintag/js'
+// import { FintagClient } from '@fintag/js'
+const { FintagClient } = await import("@fintag/js");
 
 const connection = new Connection(clusterApiUrl("devnet"), 'confirmed');
 
@@ -32,7 +33,7 @@ const App = () => {
       let publicKey;
       if (value.startsWith("#")) {
         const getPubKey = await fintag.getWalletInfo(value);
-        publicKey = getPubKey?.wallet;
+        publicKey = new PublicKey(getPubKey?.wallet);
       } else {
         publicKey = new PublicKey(value);
       }
