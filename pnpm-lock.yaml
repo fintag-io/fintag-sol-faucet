@@ -15,8 +15,8 @@ importers:
         specifier: ^11.14.0
         version: 11.14.0(@types/react@19.1.9)(react@19.1.1)
       '@fintag/js':
-        specifier: ^1.0.6
-        version: 1.0.6
+        specifier: ^1.0.8
+        version: 1.0.8
       '@solana/web3.js':
         specifier: ^1.98.4
         version: 1.98.4(bufferutil@4.0.9)(typescript@5.8.3)(utf-8-validate@5.0.10)
@@ -417,8 +417,8 @@ packages:
     resolution: {integrity: sha512-Ul5l+lHEcw3L5+k8POx6r74mxEYKG5kOb6Xpy2gCRW6zweT6TEhAf8vhxGgjhqrd/VO/Dirhsb+1hNpD1ue9hw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@fintag/js@1.0.6':
-    resolution: {integrity: sha512-PfewQhDtbLClESQMhGalcd290I6Xs6kFVvcXlOOXCgefQnPnHPEbXhAxtbwhO1Y5E6Xu+dohh6IDHRAIoD/hdQ==}
+  '@fintag/js@1.0.8':
+    resolution: {integrity: sha512-+CXqp18FyKP4DSqTdfUFQdppZ/dRXi15quMkV9w+Ev+a/6SjYcSaqvJQ3eWnPsYPr3iJDZt3Nmhj1PFhuE4Fdw==}
 
   '@floating-ui/core@1.7.3':
     resolution: {integrity: sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w==}
@@ -2250,7 +2250,7 @@ snapshots:
       '@eslint/core': 0.15.1
       levn: 0.4.1
 
-  '@fintag/js@1.0.6':
+  '@fintag/js@1.0.8':
     dependencies:
       axios: 1.11.0
     transitivePeerDependencies:

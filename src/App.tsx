@@ -17,7 +17,7 @@ const App = () => {
 
   const requestAirdrop = async () => {
     if (!value) {
-      console.error("FinTag/Wallet address is required");
+      console.error("FinTag is required");
       toaster.warning({
         title: "FinTag Required",
         description: "Please enter a FinTag to request an airdrop.",
