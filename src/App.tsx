@@ -10,7 +10,7 @@ const connection = new Connection(clusterApiUrl("devnet"), 'confirmed');
 
 const App = () => {
   const AIRDROP_AMOUNT = 0.1;
-  const fintag = new FintagClient(import.meta.env.VITE_FINTAG_API_KEY || "")
+  const fintag = new FintagClient(import.meta.env.VITE_FINTAG_URL, import.meta.env.VITE_FINTAG_API_KEY || "")
 
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
