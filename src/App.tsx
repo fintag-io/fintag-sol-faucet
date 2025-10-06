@@ -20,7 +20,7 @@ const App = () => {
       console.error("FinTag/Wallet address is required");
       toaster.warning({
         title: "FinTag Required",
-        description: "Please enter a FinTag or wallet address to request an airdrop.",
+        description: "Please enter a FinTag to request an airdrop.",
         duration: 3000,
       });
       return;
@@ -70,7 +70,7 @@ const App = () => {
       </Box>
       <Box display='flex' w='100%' px='20px' flexDirection={{ base: 'column', md: 'row' }} alignItems='center' justifyContent='center' mt={4}>
         <Input
-          placeholder="Enter your FinTag or wallet address"
+          placeholder="Enter your FinTag"
           borderRadius='0'
           width={{base: '100%', md:'400px' }}
           value={value}
