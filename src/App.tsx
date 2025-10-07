@@ -36,7 +36,7 @@ const App = () => {
       } else {
         publicKey = new PublicKey(value);
       }
-
+      
       const airdropSignature = await connection.requestAirdrop(publicKey, AIRDROP_AMOUNT * LAMPORTS_PER_SOL);
       await connection.confirmTransaction(airdropSignature, 'confirmed');
       console.log(`Airdrop successful for ${value}`);
