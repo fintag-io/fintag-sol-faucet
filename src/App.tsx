@@ -64,7 +64,7 @@ const App = () => {
   };
 
   return (
-    <Box display='flex' onKeyDown={(e) => {
+    <Box display='flex' onKeyUp={(e) => {
       if (e.key === 'Enter') {
         requestAirdrop();
       }
