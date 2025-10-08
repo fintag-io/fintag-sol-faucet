@@ -6,7 +6,7 @@ import { Spinner } from "@chakra-ui/react";
 import logo from './assets/logo.png';
 import { FintagClient } from "@fintag/js";
 
-const connection = new Connection(clusterApiUrl("devnet"), 'confirmed');
+const connection = new Connection(clusterApiUrl("testnet"), 'confirmed');
 
 const App = () => {
   const AIRDROP_AMOUNT = 0.1;
@@ -23,7 +23,7 @@ const App = () => {
 
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [lastAirdropTime, setLastAirdropTime] = useState<number>(0);
+  // const [lastAirdropTime, setLastAirdropTime] = useState<number>(0);
 
   const requestAirdrop = async () => {
     if (!value) {
@@ -36,20 +36,20 @@ const App = () => {
       return;
     }
 
-    // Rate limiting check (24 hours = 86400000 ms)
-    const now = Date.now();
-    const timeSinceLastAirdrop = now - lastAirdropTime;
-    const cooldownPeriod = 24 * 60 * 60 * 1000; // 24 hours
+    // // Rate limiting check (24 hours = 86400000 ms)
+    // const now = Date.now();
+    // const timeSinceLastAirdrop = now - lastAirdropTime;
+    // const cooldownPeriod = 24 * 60 * 60 * 1000; // 24 hours
     
-    if (timeSinceLastAirdrop < cooldownPeriod) {
-      const hoursLeft = Math.ceil((cooldownPeriod - timeSinceLastAirdrop) / (60 * 60 * 1000));
-      toaster.warning({
-        title: "Rate Limit",
-        description: `Please wait ${hoursLeft} more hours before requesting another airdrop.`,
-        duration: 5000,
-      });
-      return;
-    }
+    // if (timeSinceLastAirdrop < cooldownPeriod) {
+    //   const hoursLeft = Math.ceil((cooldownPeriod - timeSinceLastAirdrop) / (60 * 60 * 1000));
+    //   toaster.warning({
+    //     title: "Rate Limit",
+    //     description: `Please wait ${hoursLeft} more hours before requesting another airdrop.`,
+    //     duration: 5000,
+    //   });
+    //   return;
+    // }
 
     try {
       setIsLoading(true);
@@ -71,7 +71,7 @@ const App = () => {
       console.log(`Airdrop successful for ${value}`);
       
       // Update last airdrop time
-      setLastAirdropTime(Date.now());
+      // setLastAirdropTime(Date.now());
       
       setValue("");
       toaster.success({
@@ -115,7 +115,7 @@ const App = () => {
       </Box>
       <Box mb='20px'>
         <Text as="p" fontWeight='bold' textAlign='center' fontSize='24px'>
-          SOL Devnet Faucet
+          SOL Testnet Faucet
         </Text>
       </Box>
       <Box display='flex' w='100%' px='20px' flexDirection={{ base: 'column', md: 'row' }} alignItems='center' justifyContent='center' mt={4}>
