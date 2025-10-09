@@ -1,10 +1,10 @@
-# FinTag Solana Testnet Faucet
+# FinTag Solana Devnet Faucet
 
-This is a simple faucet for the Solana Testnet, allowing users to request SOL tokens for testing purposes.
+This is a simple faucet for the Solana Devnet, allowing users to request SOL tokens for testing purposes.
 
 ## Getting Started
 
-To get started with the FinTag Solana Testnet Faucet, follow these steps:
+To get started with the FinTag Solana Devnet Faucet, follow these steps:
 
 1. Clone the repository:
 
@@ -35,7 +35,7 @@ To request SOL tokens from the faucet, simply enter your Solana wallet address a
 
 ## Contributing
 
-If you'd like to contribute to the FinTag Solana Testnet Faucet, please follow these steps:
+If you'd like to contribute to the FinTag Solana Devnet Faucet, please follow these steps:
 
 1. Fork the repository.
 2. Create a new branch for your feature or bug fix.
