@@ -6,7 +6,7 @@ import { Spinner } from "@chakra-ui/react";
 import logo from './assets/logo.png';
 import { FintagClient } from "@fintag/js";
 
-const connection = new Connection(clusterApiUrl("devnet"), 'confirmed');
+const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
 
 const App = () => {
   const AIRDROP_AMOUNT = 0.1;
