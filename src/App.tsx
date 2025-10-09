@@ -6,24 +6,14 @@ import { Spinner } from "@chakra-ui/react";
 import logo from './assets/logo.png';
 import { FintagClient } from "@fintag/js";
 
-const connection = new Connection(clusterApiUrl("testnet"), 'confirmed');
+const connection = new Connection(clusterApiUrl("devnet"), 'confirmed');
 
 const App = () => {
   const AIRDROP_AMOUNT = 0.1;
-  
-  // Validate environment variables
-  if (!import.meta.env.VITE_FINTAG_URL) {
-    console.error("VITE_FINTAG_URL is not defined in environment variables");
-  }
-  if (!import.meta.env.VITE_FINTAG_API_KEY) {
-    console.warn("VITE_FINTAG_API_KEY is not defined in environment variables");
-  }
-  
   const fintag = new FintagClient(import.meta.env.VITE_FINTAG_URL, import.meta.env.VITE_FINTAG_API_KEY || "")
 
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  // const [lastAirdropTime, setLastAirdropTime] = useState<number>(0);
 
   const requestAirdrop = async () => {
     if (!value) {
@@ -35,21 +25,6 @@ const App = () => {
       });
       return;
     }
-
-    // // Rate limiting check (24 hours = 86400000 ms)
-    // const now = Date.now();
-    // const timeSinceLastAirdrop = now - lastAirdropTime;
-    // const cooldownPeriod = 24 * 60 * 60 * 1000; // 24 hours
-    
-    // if (timeSinceLastAirdrop < cooldownPeriod) {
-    //   const hoursLeft = Math.ceil((cooldownPeriod - timeSinceLastAirdrop) / (60 * 60 * 1000));
-    //   toaster.warning({
-    //     title: "Rate Limit",
-    //     description: `Please wait ${hoursLeft} more hours before requesting another airdrop.`,
-    //     duration: 5000,
-    //   });
-    //   return;
-    // }
 
     try {
       setIsLoading(true);
@@ -69,10 +44,6 @@ const App = () => {
       const airdropSignature = await connection.requestAirdrop(publicKey, AIRDROP_AMOUNT * LAMPORTS_PER_SOL);
       await connection.confirmTransaction(airdropSignature, 'confirmed');
       console.log(`Airdrop successful for ${value}`);
-      
-      // Update last airdrop time
-      // setLastAirdropTime(Date.now());
-      
       setValue("");
       toaster.success({
         title: "Airdrop Successful",
@@ -81,21 +52,10 @@ const App = () => {
       }); 
     } catch (error) {
       console.error("Airdrop failed:", error);
-      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
-      
-      // Check for specific Solana errors
-      let userFriendlyMessage = "Could not send SOL";
-      if (errorMessage.includes("airdrop request failed")) {
-        userFriendlyMessage = "Airdrop request failed. You may have exceeded the rate limit (1 request per 24h).";
-      } else if (errorMessage.includes("429")) {
-        userFriendlyMessage = "Rate limit exceeded. Please try again later.";
-      } else if (errorMessage.includes("Invalid public key")) {
-        userFriendlyMessage = "Invalid wallet address for this FinTag.";
-      }
-      
+      // const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
       toaster.error({
         title: "Airdrop Failed",
-        description: userFriendlyMessage,
+        description: `Could not send SOL`,
         duration: 5000,
       });
     } finally {
@@ -115,7 +75,7 @@ const App = () => {
       </Box>
       <Box mb='20px'>
         <Text as="p" fontWeight='bold' textAlign='center' fontSize='24px'>
-          SOL Testnet Faucet
+          SOL Devnet Faucet
         </Text>
       </Box>
       <Box display='flex' w='100%' px='20px' flexDirection={{ base: 'column', md: 'row' }} alignItems='center' justifyContent='center' mt={4}>
