@@ -66,9 +66,8 @@ const App = () => {
         })
       );
 
-      const signature = await sendAndConfirmTransaction(connection, transaction, [faucetKeypair]);
+      await sendAndConfirmTransaction(connection, transaction, [faucetKeypair]);
 
-      console.log(`✅ Sent ${AIRDROP_AMOUNT} SOL to ${value}. Tx: ${signature}`);
       setValue("");
       toaster.success({
         title: "Airdrop Successful",
